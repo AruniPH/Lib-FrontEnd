@@ -29,7 +29,25 @@ export class BookComponent implements OnInit {
 
   ngOnInit(): void {
     this.isEditBook == false;
-  
+    this.GetAllBooks();
+  }
+
+  GetAllBooks() {
+    this.bookService.GetAllBooks().subscribe(allData => {
+      console.log(allData);
+     this.Books = allData;
+      
+
+    })
+  }
+
+  GetBookByIsbn(ID: any) {
+    
+  }
+
+  DeleteBookByIsbn(isbn: string): void {
+
+
   }
 
   SaveBook(): void {
