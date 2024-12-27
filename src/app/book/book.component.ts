@@ -33,44 +33,67 @@ export class BookComponent implements OnInit {
   }
 
   GetAllBooks() {
-    this.bookService.GetAllBooks().subscribe(allData => {
-      console.log(allData);
-     this.Books = allData;
+    this.bookService.GetAllBooks().subscribe(all => {
+      console.log(all);
+     this.Books = all;
       
 
     })
   }
-
-  GetBookByIsbn(ID: any) {
-    
+  EditBook(Book: any): void {
+    this.BookObj = { ...Book }; // all book data to form
+    this.isEditBook = true; //  edit mode in the form
   }
 
+  GetBookByIsbn(isbn: any) {
+    this.bookService.GetBookByISBN(isbn).subscribe(all => {
+      this.BookObj = all.data.dataList[0];
+      this.isEditBook = true;
+    })
+  }
+
+  UpdateBook(): void {
+    swal({
+      title: "Update",
+      text: "Do you want to update this Book's details?",
+      icon: "warning",
+      dangerMode: true,
+    }).then((willUpdate: any) => {
+      if (willUpdate) {
+        this.bookService.updateBook(this.BookObj).subscribe(() => {
+          this.GetAllBooks(); 
+          this.isEditBook = false;
+          swal("Updated!", "Book details have been updated!", "success");
+          this.ClearForm();
+        });
+      }
+    });
+  }
   DeleteBookByIsbn(isbn: string): void {
-
-
-  }
-
-  SaveBook(): void {
-    if (this.isEditBook) {
-    
-    } else {
-      swal({
-        title: "Are you sure?",
-        text: "Do you want to add this Book?",
-        icon: "warning",
-        dangerMode: true,
-      }).then((willAdd: any) => {
-        if (willAdd) {
-          this.bookService.createBook(this.BookObj).subscribe(() => {
-           
-            swal("Success!", "Book has been added!", "success");
-            this.ClearForm();
+    swal({
+      title: "Are you sure",
+      text: "Do you want to delete this Book?",
+      icon: "warning",
+      dangerMode: true,
+    })
+      .then((willDelete: any) => {
+        if (willDelete) {
+          swal("Deleted!", "Book has been deleted!", "success");
+          this.bookService.DeleteBookByIsbn(isbn).subscribe(() => {
+            this.GetAllBooks(); // Refresh the Book list
+            swal("Deleted!", "Book has been deleted!", "success");
           });
         }
       });
-    }
   }
 
+    SaveBook(): void {
+      this.bookService.createBook(this.BookObj).subscribe(() => {
+        swal("Success!", "Book has been added!", "success");
+        this.Books.push(this.BookObj)
+        this.ClearForm();
+      });
+    }
 
 
   ClearForm(): void {
