@@ -29,9 +29,6 @@ export class BookService {
     return this.http.delete<void>(`${this.baseUrl}/delete/${isbn}`);
   }
 
- // UpdateBook(book:any):Observable<any>{
-   // return this.http.put(`${this.baseUrl}/update`, book);
-  //}
 
   updateBook(book: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/update`, book); // 

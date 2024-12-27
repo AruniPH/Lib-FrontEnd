@@ -33,9 +33,9 @@ export class BookComponent implements OnInit {
   }
 
   GetAllBooks() {
-    this.bookService.GetAllBooks().subscribe(allData => {
-      console.log(allData);
-     this.Books = allData;
+    this.bookService.GetAllBooks().subscribe(all => {
+      console.log(all);
+     this.Books = all;
       
 
     })
@@ -70,8 +70,21 @@ export class BookComponent implements OnInit {
     });
   }
   DeleteBookByIsbn(isbn: string): void {
-
-
+    swal({
+      title: "Are you sure",
+      text: "Do you want to delete this Book?",
+      icon: "warning",
+      dangerMode: true,
+    })
+      .then((willDelete: any) => {
+        if (willDelete) {
+          swal("Deleted!", "Book has been deleted!", "success");
+          this.bookService.DeleteBookByIsbn(isbn).subscribe(() => {
+            this.GetAllBooks(); // Refresh the Book list
+            swal("Deleted!", "Book has been deleted!", "success");
+          });
+        }
+      });
   }
 
     SaveBook(): void {
