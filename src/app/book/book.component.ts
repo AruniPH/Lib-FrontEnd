@@ -90,6 +90,7 @@ export class BookComponent implements OnInit {
     SaveBook(): void {
       this.bookService.createBook(this.BookObj).subscribe(() => {
         swal("Success!", "Book has been added!", "success");
+        this.Books.push(this.BookObj)
         this.ClearForm();
       });
     }
