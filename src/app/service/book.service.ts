@@ -22,14 +22,18 @@ export class BookService {
   }
 
   GetBookByISBN(isbn:string):Observable<any>{
-    return this.http.get(`${this.baseUrl}/getByCode/${isbn}`);
+    return this.http.get(`${this.baseUrl}/getBookDetailsByIsbn/${isbn}`);
   }
 
   DeleteBookByIsbn(isbn:string):Observable<void>{
     return this.http.delete<void>(`${this.baseUrl}/delete/${isbn}`);
   }
 
-  UpdateBook(book:any):Observable<any>{
-    return this.http.put(`${this.baseUrl}/update`, book);
+ // UpdateBook(book:any):Observable<any>{
+   // return this.http.put(`${this.baseUrl}/update`, book);
+  //}
+
+  updateBook(book: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update`, book); // 
   }
 }
