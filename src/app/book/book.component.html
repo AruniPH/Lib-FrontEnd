@@ -44,27 +44,28 @@
         <div class="card shadow h-100 border-0">
           <div class="card-header bg-primary text-white fw-bold">Book Form</div>
           <div class="card-body">
+           <!-- <form (ngSubmit)="SaveBook()"> -->
             <form (ngSubmit)="SaveBook()">
               <div class="form-group mb-3">
                 <label for="isbn" class="fw-bold">Book ISBN<span class="text-danger">*</span></label>
                 <input type="text" class="form-control mt-2" id="isbn" name="isbn"
-                  [(ngModel)]="BookObj.isbn" required placeholder="Enter Book ISBN">
+                  [(ngModel)]="bookObj.isbn" required placeholder="Enter Book ISBN">
               </div>
               <div class="form-group mb-3">
                 <label for="title" class="fw-bold">Title <span class="text-danger">*</span></label>
                 <input type="text" class="form-control mt-2" id="title" name="title"
-                  [(ngModel)]="BookObj.title" required placeholder="Enter Title">
+                  [(ngModel)]="bookObj.title" required placeholder="Enter Title">
               </div>
               <div class="form-group mb-3">
                 <label for="author" class="fw-bold">Author<span class="text-danger">*</span></label>
                 <input type="text" class="form-control mt-2" id="author" name="author"
-                  [(ngModel)]="BookObj.author" required placeholder="Enter Author">
+                  [(ngModel)]="bookObj.author" required placeholder="Enter Author">
               </div>
               <div class="form-group mb-3">
-                <label for="comAddressThree" class="fw-bold">Publisher <span
+                <label for="publisher" class="fw-bold">Publisher <span
                     class="text-danger">*</span></label>
                 <input type="text" class="form-control mt-2" id="publisher" name="publisher"
-                  [(ngModel)]="BookObj.publisher" required placeholder="Publisher">
+                  [(ngModel)]="bookObj.publisher" required placeholder="Publisher">
               </div>
               <div class="form-group text-end mt-4">
                 <button class="btn btn-primary px-4">{{isEditBook == false ? "Submit" : "Update"}}</button>
@@ -103,7 +104,7 @@
                     <td>{{bookObj.author}}</td>
                     <td>{{bookObj.publisher}}</td>
                     <td class="text-center">
-                      <button class="btn btn-warning me-1" (click)="GetBookByIsbn(bookObj.isbn)">
+                      <button class="btn btn-warning me-1" (click)="EditBook(bookObj)">
                         <i class="bi bi-pencil-square"></i>Update
                       </button>
                       <button class="btn btn-danger me-1" (click)="DeleteBookByIsbn(bookObj.isbn)">
