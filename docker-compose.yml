@@ -1,0 +1,16 @@
+version: '27.3.1'
+
+services:
+  backend-service:
+    image: lib-image2 
+    ports:
+      - "8002:8001"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/librarydb
+
+  frontend-service:
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-service
